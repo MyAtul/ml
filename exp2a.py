@@ -1,3 +1,6 @@
+# Install required libraries (run in terminal / command prompt):
+# pip install pandas matplotlib scikit-learn
+
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.tree import DecisionTreeClassifier, plot_tree

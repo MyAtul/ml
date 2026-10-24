@@ -1,3 +1,6 @@
+# Install required libraries (run in terminal / command prompt):
+# pip install numpy matplotlib scikit-learn
+
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split

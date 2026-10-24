@@ -1,3 +1,6 @@
+# Install required libraries (run in terminal / command prompt):
+# pip install matplotlib scikit-learn
+
 import matplotlib.pyplot as plt
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split

@@ -1,3 +1,6 @@
+# Install required libraries (run in terminal / command prompt):
+# pip install numpy matplotlib scikit-learn
+
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.cluster import DBSCAN
