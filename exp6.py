@@ -1,5 +1,6 @@
 # Install required libraries (run in terminal / command prompt):
 # pip install numpy matplotlib scikit-learn
+#py -3.11 -m pip install numpy matplotlib scikit-learn
 
 import numpy as np
 import matplotlib.pyplot as plt

@@ -1,5 +1,6 @@
 # Install required libraries (run in terminal / command prompt):
 # pip install pandas matplotlib scikit-learn
+#py -3.11 -m pip install pandas matplotlib scikit-learn
 
 import pandas as pd
 import matplotlib.pyplot as plt
