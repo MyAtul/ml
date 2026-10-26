@@ -16,7 +16,7 @@ model = DecisionTreeRegressor(max_depth=3, random_state=42)
 model.fit(X, Y)
 
 bedrooms = int(input("Enter Number of Bedrooms: "))
-rent = model.predict(pd.DataFrame({'Bedrooms': [bedrooms]}))[0]
+rent = model.predict([[bedrooms]])[0]
 print("Predicted Monthly Rent: ₹", round(rent, 2))
 
 # Simple graph
