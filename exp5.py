@@ -1,49 +1,28 @@
 # Install required libraries (run in terminal / command prompt):
-# pip install numpy matplotlib scikit-learn
-#py -3.11 -m pip install numpy matplotlib scikit-learn
+# pip install matplotlib scikit-learn
+# py -3.11 -m pip install matplotlib scikit-learn
 
-import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.cluster import DBSCAN
-from sklearn.preprocessing import StandardScaler
+from sklearn.datasets import make_moons
+from sklearn.cluster import DBSCAN, KMeans
 
-X = np.array([
-    [20,22],[21,25],[22,24],[23,27],[24,26],
-    [25,29],[26,28],[27,31],[28,30],[29,32],
-    [40,65],[41,68],[42,70],[43,67],[44,72],
-    [45,75],[46,73],[47,78],[48,76],[49,80],
-    [60,35],[61,38],[62,37],[63,40],[64,42],
-    [65,41],[66,44],[67,46],[68,45],[69,48],
-    [30,90],[75,15],[85,95],[18,80],[55,10]
-])
+X, _ = make_moons(n_samples=300, noise=0.08, random_state=42)
 
-print("Data points:", len(X))
-print("Features:", X.shape[1])
+db_labels = DBSCAN(eps=0.2, min_samples=5).fit_predict(X)
+km_labels = KMeans(n_clusters=2, random_state=42).fit_predict(X)
 
-X_scaled = StandardScaler().fit_transform(X)
-labels = DBSCAN(eps=0.45, min_samples=4).fit_predict(X_scaled)
+print("DBSCAN clusters:", len(set(db_labels)) - (-1 in db_labels))
+print("Noise points:", list(db_labels).count(-1))
 
-clusters = len(set(labels)) - (-1 in labels)
-print("Number of clusters:", clusters)
-print("Cluster labels:", labels)
-print("Noise points:", np.sum(labels == -1))
+fig, ax = plt.subplots(1, 3, figsize=(14, 4))
 
-plt.scatter(X[:,0], X[:,1])
-plt.title("Original Dataset")
-plt.xlabel("Age")
-plt.ylabel("Annual Spending (Thousands)")
-plt.grid()
-plt.show()
+ax[0].scatter(X[:, 0], X[:, 1])
+ax[0].set_title("Before (no labels)")
 
-for label in set(labels):
-    points = X[labels == label]
-    plt.scatter(points[:,0], points[:,1],
-                marker='x' if label == -1 else 'o',
-                label='Noise' if label == -1 else f'Cluster {label+1}')
+ax[1].scatter(X[:, 0], X[:, 1], c=km_labels)
+ax[1].set_title("KMeans (cuts the moons wrongly)")
 
-plt.title("DBSCAN Clustering")
-plt.xlabel("Age")
-plt.ylabel("Annual Spending (Thousands)")
-plt.legend()
-plt.grid()
+ax[2].scatter(X[:, 0], X[:, 1], c=db_labels)
+ax[2].set_title("DBSCAN (follows the shapes)")
+
 plt.show()
