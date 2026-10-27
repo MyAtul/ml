@@ -14,10 +14,12 @@ model = AdaBoostClassifier(n_estimators=50, random_state=42)
 model.fit(X_train, y_train)
 pred = model.predict(X_test)
 
+acc = accuracy_score(y_test,pred) * 100
+
 print("Accuracy:", accuracy_score(y_test, pred) * 100, "%")
 print("Confusion Matrix:\n", confusion_matrix(y_test, pred))
 print(classification_report(y_test, pred))
 
-plt.bar(["Boosting"], [accuracy_score(y_test, pred) * 100])
+plt.bar(["Boosting"], [acc])
 plt.ylabel("Accuracy (%)")
 plt.show()

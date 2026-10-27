@@ -7,35 +7,30 @@ import numpy as np
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.metrics import accuracy_score
 
-data = load_iris()
-X, y = data.data[:100, :2], data.target[:100]
+X, y = load_iris(return_X_y=True)
+X, y = X[:100, :2], y[:100]
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
 model = SVC(kernel='linear').fit(X_train, y_train)
-pred = model.predict(X_test)
+print("Accuracy:", accuracy_score(y_test, model.predict(X_test)))
 
-print("Accuracy:", accuracy_score(y_test, pred))
-print(classification_report(y_test, pred))
-
-# Hyperplane and margins
+# Graph
 plt.scatter(X[:, 0], X[:, 1], c=y)
 plt.scatter(model.support_vectors_[:, 0],
             model.support_vectors_[:, 1],
-            facecolors='none', edgecolors='red', s=100)
+            facecolors='none', edgecolors='red')
 
-w = model.coef_[0]
-b = model.intercept_[0]
-xx = np.linspace(X[:, 0].min(), X[:, 0].max(), 100)
-yy = -(w[0] * xx + b) / w[1]
+w, b = model.coef_[0], model.intercept_[0]
+x = np.linspace(X[:, 0].min(), X[:, 0].max(), 100)
 
-plt.plot(xx, yy, 'k-')                  # Hyperplane
-plt.plot(xx, yy + 1/w[1], 'k--')        # Margins
-plt.plot(xx, yy - 1/w[1], 'k--')
+plt.plot(x, -(w[0]*x+b)/w[1], 'k-')
+plt.plot(x, -(w[0]*x+b-1)/w[1], 'k--')
+plt.plot(x, -(w[0]*x+b+1)/w[1], 'k--')
 
 plt.xlabel("Sepal Length")
 plt.ylabel("Sepal Width")

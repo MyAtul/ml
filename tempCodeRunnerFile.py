@@ -1,0 +1,1 @@
+print("Prediction:", "WILL PURCHASE" if pred else "WILL NOT PURCHASE")
